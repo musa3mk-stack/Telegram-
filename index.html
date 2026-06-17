@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ha">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M.S Mining Network</title>
+    <script src="https://telegram.org"></script>
+    <style>
+        body { background-color: #121212; color: white; font-family: Arial, sans-serif; text-align: center; padding: 20px; margin: 0; }
+        .card { background: linear-gradient(135deg, #ff3333, #990000); padding: 20px; border-radius: 20px; margin: 20px auto; max-width: 350px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        .balance-card { background-color: #1e1e1e; padding: 15px; border-radius: 15px; margin: 20px auto; max-width: 350px; border: 1px solid #333; }
+        .status { color: #00ffcc; font-weight: bold; }
+        .btn { background-color: #007bff; color: white; border: none; padding: 12px 30px; border-radius: 10px; font-size: 16px; cursor: pointer; font-weight: bold; width: 80%; }
+        h2 { margin: 5px 0; }
+        .progress-bar { background-color: #333; border-radius: 10px; height: 10px; width: 80%; margin: 15px auto; overflow: hidden; }
+        .progress { background-color: #00ffcc; height: 100%; width: 50%; }
+    </style>
+</head>
+<body>
+
+    <h3 id="user-greeting">👋 Sannu da Zuwa Gram Network</h3>
+    
+    <div class="balance-card">
+        <p>Total Balance</p>
+        <h2 id="balance">222.1600 GRM</h2>
+        <p class="status">● Active</p>
+    </div>
+
+    <div class="card">
+        <p>⚡ Mining Rate: 0.54 GRM / hour</p>
+        <p>🔋 Energy: 100 / 100</p>
+        <div class="progress-bar"><div class="progress"></div></div>
+        <p>⏳ Lokaci: <span id="timer">01:59:59</span></p>
+    </div>
+
+    <button class="btn">Working...</button>
+
+    <script>
+        window.Telegram.WebApp.ready();
+        window.Telegram.WebApp.expand();
+
+        const user = window.Telegram.WebApp.initDataUnsafe.user;
+        if (user && user.first_name) {
+            document.getElementById('user-greeting').innerText = `👋 Sannu da Zuwa, ${user.first_name}`;
+        }
+
+        let balance = 222.16;
+        let timerSeconds = 7199;
+
+        setInterval(() => {
+            balance += 0.00015;
+            document.getElementById('balance').innerText = balance.toFixed(4) + " GRM";
+        }, 1000);
+
+        setInterval(() => {
+            if(timerSeconds > 0) {
+                timerSeconds--;
+                let hrs = Math.floor(timerSeconds / 3600).toString().padStart(2, '0');
+                let mins = Math.floor((timerSeconds % 3600) / 60).toString().padStart(2, '0');
+                let secs = (timerSeconds % 60).toString().padStart(2, '0');
+                document.getElementById('timer').innerText = `${hrs}:${mins}:${secs}`;
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
